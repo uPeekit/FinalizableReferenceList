@@ -42,6 +42,17 @@ public class FinalizableReferenceSetTest {
 	}
 	
 	@Test
+	public void testReferenceIsCollectedWithSecondGcCall() {
+		set = FinalizableReferenceSet.phantom();
+		set.add(obj, () -> state.incr());
+		set.add(set.getReferences()[0], () -> state.incr());
+		
+		obj = null;
+		callGcAndAssertAwaiting(() -> state.i == 1, 3000);
+		callGcAndAssertAwaiting(() -> state.i == 2, 3000);
+	}
+	
+	@Test
 	public void testSetItselfCollected() {
 		set = FinalizableReferenceSet.phantom();
 		set.add(obj, () -> state.incr());

@@ -24,7 +24,7 @@ public class FinalizableReferenceSet<T> {
 	private ReferenceQueue<T> queue = new ReferenceQueue<>();
 	
 	private Thread cycleThread;
-	private boolean isActive = true;
+	private volatile boolean isActive = true;
 	
 	// generator defines reference type
 	FinalizableReferenceSet(BiFunction<T, ReferenceQueue<T>, Reference<T>> refGenerator) {
@@ -51,7 +51,9 @@ public class FinalizableReferenceSet<T> {
 	/**
 	 * Should be called when set is not needed anymore to stop cycling thread and allow gc collect the set
 	 * */
-	public void destroy() {
+	public synchronized void destroy() {
+		if(!isActive)
+			return;
 		isActive = false;
 		cycleThread.interrupt();
 	}
@@ -65,7 +67,7 @@ public class FinalizableReferenceSet<T> {
 	 * Notice that if references are phantom, result is always true
 	 * @return true if element was not present in any of references
 	 * */
-	public boolean add(T element, Runnable callback) {
+	public synchronized boolean add(T element, Runnable callback) {
 		if(element == null) {
 			throw new NullPointerException();
 		}
@@ -88,6 +90,17 @@ public class FinalizableReferenceSet<T> {
 	
 	public void clear() {
 		callbacks.clear();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public synchronized Reference<? extends T>[] getReferences() {
+		Reference<? extends T>[] arr = new Reference[callbacks.size()];
+		Iterator<Reference<? extends T>> iter = callbacks.keySet().iterator();
+		int i = 0;
+		while(iter.hasNext()) {
+			arr[i++] = iter.next();
+		}
+		return arr;
 	}
 	
 	/**
@@ -119,10 +132,6 @@ public class FinalizableReferenceSet<T> {
 																			   .map(Class::getName)
 																			   .orElse(Object.class.getName()));
 		}
-	}
-
-	ReferenceQueue<T> queue() {
-		return queue;
 	}
 
 	Class<?> referenceType() {
