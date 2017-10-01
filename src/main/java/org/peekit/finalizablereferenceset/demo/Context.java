@@ -1,17 +1,17 @@
-package org.peekit.finalizablereferencelist.demo;
+package org.peekit.finalizablereferenceset.demo;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
-import org.peekit.finalizablereferencelist.list.FinalizableReferenceList;
+import org.peekit.finalizablereferenceset.set.FinalizableReferenceSet;
 
 public class Context<T> {
 
 	private Supplier<T> generator;
 	private List<T> normalList;
 	private List<?> bigList;
-	private FinalizableReferenceList<T> finalizableReferenceList;
+	private FinalizableReferenceSet<T> finalizableReferenceSet;
 	
 	public Context(Supplier<T> generator) {
 		this.generator = generator;
@@ -24,8 +24,8 @@ public class Context<T> {
 		return normalList;
 	}
 	
-	public FinalizableReferenceList<T> getReferenceList() {
-		return finalizableReferenceList;
+	public FinalizableReferenceSet<T> getReferenceList() {
+		return finalizableReferenceSet;
 	}
 
 	public List<?> getBigList() {
@@ -36,8 +36,8 @@ public class Context<T> {
 		return generator;
 	}
 	
-	public void setReferenceList(FinalizableReferenceList<T> referenceList) {
-		this.finalizableReferenceList = referenceList;
+	public void setReferenceList(FinalizableReferenceSet<T> referenceList) {
+		this.finalizableReferenceSet = referenceList;
 	}
 
 }

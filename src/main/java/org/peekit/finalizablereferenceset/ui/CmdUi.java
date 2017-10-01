@@ -1,4 +1,4 @@
-package org.peekit.finalizablereferencelist.ui;
+package org.peekit.finalizablereferenceset.ui;
 
 import static java.util.stream.Collectors.joining;
 
@@ -6,9 +6,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-import org.peekit.finalizablereferencelist.demo.Context;
-import org.peekit.finalizablereferencelist.demo.Util;
-import org.peekit.finalizablereferencelist.list.FinalizableReferenceList;
+import org.peekit.finalizablereferenceset.demo.Context;
+import org.peekit.finalizablereferenceset.demo.Util;
+import org.peekit.finalizablereferenceset.set.FinalizableReferenceSet;
 
 public class CmdUi<T> {
 	private Context<T> context;
@@ -62,13 +62,13 @@ public class CmdUi<T> {
 			if(scanner.hasNextLine()) {
 				input = scanner.nextLine();
 				if(input.equals("weak")) {
-					context.setReferenceList(FinalizableReferenceList.weak());
+					context.setReferenceList(FinalizableReferenceSet.weak());
 					break;
 				} else if(input.equals("soft")) {
-					context.setReferenceList(FinalizableReferenceList.soft());
+					context.setReferenceList(FinalizableReferenceSet.soft());
 					break;
 				} else if(input.equals("phantom")) {
-					context.setReferenceList(FinalizableReferenceList.phantom());
+					context.setReferenceList(FinalizableReferenceSet.phantom());
 					break;
 				}
 			}

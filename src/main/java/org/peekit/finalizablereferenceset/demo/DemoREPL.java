@@ -1,7 +1,7 @@
-package org.peekit.finalizablereferencelist.demo;
+package org.peekit.finalizablereferenceset.demo;
 
-import org.peekit.finalizablereferencelist.demo.Util.MyObject;
-import org.peekit.finalizablereferencelist.ui.CmdUi;
+import org.peekit.finalizablereferenceset.demo.Util.MyObject;
+import org.peekit.finalizablereferenceset.ui.CmdUi;
 
 public class DemoREPL {
 	

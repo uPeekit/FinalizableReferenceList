@@ -1,4 +1,4 @@
-package org.peekit.finalizablereferencelist.demo;
+package org.peekit.finalizablereferenceset.demo;
 
 public class Util {
 
